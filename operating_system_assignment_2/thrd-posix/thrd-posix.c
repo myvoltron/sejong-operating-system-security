@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   pthread_attr_t attr; // set of thread attributes
 
   if (argc != 2) {
-    fprintf(stderr, "usage: ./pipe <integer value>\n");
+    fprintf(stderr, "usage: ./posix <integer value>\n");
     return -1;
   }
   if (atoi(argv[1]) < 0) {
