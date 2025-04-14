@@ -14,30 +14,38 @@ int main(void) {
   int fd[2];
   pid_t pid;
 
+  // create the pipe
   if (pipe(fd) == -1) {
     fprintf(stderr, "Pipe Failed");
     return 1;
   }
 
+  // fork a child process
   pid = fork();
 
-  if (pid < 0) {
+  if (pid < 0) { // error occurred
     fprintf(stderr, "Fork Failed");
     return 1;
   }
 
-  if (pid > 0) {
+  if (pid > 0) { // parent process
+    // close the unused end of the pipe
     close(fd[READ_END]);
 
+    // write to the pipe
     write(fd[WRITE_END], write_msg, strlen(write_msg) + 1);
 
+    // close the write end of the pipe
     close(fd[WRITE_END]);
-  } else {
+  } else { // child process
+    // close the unused end of the pipe
     close(fd[WRITE_END]);
 
+    // read from the pipe
     read(fd[READ_END], read_msg, BUFFER_SIZE);
-    printf("child read %s", read_msg);
+    printf("child read %s\n", read_msg);
 
+    // close the read end of the pipe
     close(fd[READ_END]);
   }
 
