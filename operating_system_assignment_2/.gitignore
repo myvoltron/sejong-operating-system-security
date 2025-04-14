@@ -1,3 +1,2 @@
-newproc-posix
-thrd-posix
-unix-pipe
+pipe
+posix
